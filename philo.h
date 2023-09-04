@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acruz <acastilh@student.42.rio>            +#+  +:+       +#+        */
+/*   By: acastilh <acastilh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/19 19:52:13 by acruz             #+#    #+#             */
-/*   Updated: 2023/03/19 20:59:18 by acruz            ###   ########.fr       */
+/*   Created: 2023/09/03 20:15:02 by acastilh          #+#    #+#             */
+/*   Updated: 2023/09/04 08:01:27 by acastilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,28 @@
 
 # include <pthread.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
 
-struct const_philo;
+# define MAX_INT 2147483647
+# define MIN_INT -2147483648
 
-typedef	struct philo
+struct	s_const_philo;
+
+typedef struct s_philo
 {
-	int			id;
-	int			ate;
-	int			left_fork;
-	int			right_fork;
-	pthread_t	last_meal;
-	struct		const_philo	*var;
+	int							id;
+	int							ate;
+	int							left_fork;
+	int							right_fork;
+	long long					last_eat;
+	pthread_t					tid;
+	struct s_const_philo		*data;
 }				t_philo;
 
-typedef struct const_philo
+typedef struct s_const_philo
 {
 	int				num_philo;
 	int				time_die;
@@ -41,21 +46,44 @@ typedef struct const_philo
 	int				total_ate;
 	int				died;
 	long long		first_time;
+	t_philo			*philo;
 	pthread_mutex_t	meal_check;
-	pthread_mutex_t	forks[200];
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	writing;
+	pthread_mutex_t	check_die;
 }				t_const_philo;
 
 //UTILS
 
 int			ft_atoi(const char *str);
+void		print(char *str, t_const_philo *data, int pid);
+
+//TIME
+
 long long	time_ms(void);
 long long	time_diff(long long pres, long long past);
-void		fix_delay(long long time, t_const *var);
-void		print_action(t_const_philo *var, int id, char *string);
+void		fix_delay(long long time);
 
 //ERROR
 
-int	print_error(char *str);
+int			print_error(char *str);
+
+//INIT
+
+int			thread_philo(t_const_philo *data);
+int			init_mutex(t_const_philo *data);
+int			init_philo(char **argv, t_const_philo *data);
+
+//PHILO
+
+void		monitor_philo(t_const_philo *data);
+void		*create_thread(t_const_philo *data);
+void		free_mutex(t_const_philo *data);
+
+//ROUTINE
+
+void		eating(t_philo *p);
+int			mealtime_ended(t_philo *p);
+void		*routine(void *philo);
 
 #endif
