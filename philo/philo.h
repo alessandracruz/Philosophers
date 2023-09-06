@@ -6,7 +6,7 @@
 /*   By: acastilh <acastilh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:15:02 by acastilh          #+#    #+#             */
-/*   Updated: 2023/09/04 08:01:27 by acastilh         ###   ########.fr       */
+/*   Updated: 2023/09/06 19:45:12 by acastilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ typedef struct s_philo
 
 typedef struct s_const_philo
 {
-	int				num_philo;
-	int				time_die;
-	int				time_eat;
-	int				time_sleep;
-	int				nb_eat;
+	long int		num_philo;
+	long int		time_die;
+	long int		time_eat;
+	long int		time_sleep;
+	long int		nb_eat;
 	int				total_ate;
 	int				died;
 	long long		first_time;
@@ -55,7 +55,7 @@ typedef struct s_const_philo
 
 //UTILS
 
-int			ft_atoi(const char *str);
+long int	ft_atol(const char *str);
 void		print(char *str, t_const_philo *data, int pid);
 
 //TIME

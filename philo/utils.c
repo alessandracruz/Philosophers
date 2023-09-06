@@ -6,7 +6,7 @@
 /*   By: acastilh <acastilh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:15:39 by acastilh          #+#    #+#             */
-/*   Updated: 2023/09/04 08:18:58 by acastilh         ###   ########.fr       */
+/*   Updated: 2023/09/06 19:58:17 by acastilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,7 @@ void	print(char *str, t_const_philo *data, int pid)
 	pthread_mutex_unlock(&data->writing);
 }
 
-static int	check_max_int(long long n)
-{
-	if (n > MAX_INT)
-	{
-		return (-1);
-	}
-	return (n);
-}
-
-int	ft_atoi(const char *str)
+long int	ft_atol(const char *str)
 {
 	int			i;
 	long long	number;
@@ -61,5 +52,5 @@ int	ft_atoi(const char *str)
 		number = number + str[i] - 48;
 		i++;
 	}
-	return (check_max_int(number * signal));
+	return (number * signal);
 }

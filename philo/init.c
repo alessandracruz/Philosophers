@@ -6,7 +6,7 @@
 /*   By: acastilh <acastilh@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 21:41:57 by acastilh          #+#    #+#             */
-/*   Updated: 2023/09/04 06:36:26 by acastilh         ###   ########.fr       */
+/*   Updated: 2023/09/06 19:57:53 by acastilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,36 @@ int	init_mutex(t_const_philo *data)
 	return (0);
 }
 
+int	ft_check_limit(t_const_philo *data)
+{
+	if (data->num_philo > MAX_INT || data->num_philo < 1 || \
+	data->time_die > MAX_INT || data->time_die < 0 || \
+	data->time_eat > MAX_INT || data->time_eat < 0 || \
+	data->time_sleep > MAX_INT || data->time_sleep < 0 || \
+	data->nb_eat > MAX_INT)
+		return (1);
+	return (0);
+}
+
 int	init_philo(char **argv, t_const_philo *data)
 {
-	data->num_philo = ft_atoi(argv[1]);
-	data->time_die = ft_atoi(argv[2]);
-	data->time_eat = ft_atoi(argv[3]);
-	data->time_sleep = ft_atoi(argv[4]);
+	data->num_philo = ft_atol(argv[1]);
+	data->time_die = ft_atol(argv[2]);
+	data->time_eat = ft_atol(argv[3]);
+	data->time_sleep = ft_atol(argv[4]);
 	if (data->num_philo <= 0 || data->time_die <= 0 || \
 	data->time_eat <= 0 || data->time_sleep <= 0)
 		return (1);
 	if (argv[5])
 	{
-		data->nb_eat = ft_atoi(argv[5]);
+		data->nb_eat = ft_atol(argv[5]);
 		if (data->nb_eat <= 0)
 			return (1);
 	}
 	else
 		data->nb_eat = -5;
+	if (ft_check_limit(data))
+		return (1);
 	data->died = 0;
 	if (init_mutex(data))
 		return (1);
